@@ -1,12 +1,15 @@
 const express= require('express');
-const db= require('./utils/studentDatabase')
+const studentDB= require('./utils/studentDatabase')
+const busbookingDB= require('./utils/busBookingdb')
 const studentRoute= require('./routes/studentRoute')
+const busBokkingRoute= require('./routes/busBookingRote')
 const app= express();
 app.use(express.json());
 app.get('/',(req,res)=>{
     res.send(`<h1> Welecome Home</h1>`)
 })
 app.use('/students',studentRoute)
+app.use('/',busBokkingRoute)
 app.listen(3000,()=>{
     console.log('server is running');
 })
