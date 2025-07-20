@@ -13,10 +13,11 @@ db.connect((err)=>{
     }
    console.log('connectiom hass been created');
  const query = 
-  `CREATE TABLE IF NOT EXISTS Students(
+  `CREATE TABLE IF NOT EXISTS Student(
    id INT AUTO_INCREMENT PRIMARY KEY,
    name VARCHAR(20),
-   email VARCHAR(100)
+   email VARCHAR(100) UNIQUE,
+   age INT
   )`
 
 // for (const query of queries) {

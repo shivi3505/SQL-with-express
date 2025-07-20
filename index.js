@@ -8,7 +8,7 @@ app.use(express.json());
 app.get('/',(req,res)=>{
     res.send(`<h1> Welecome Home</h1>`)
 })
-app.use('/students',studentRoute)
+app.use('/',studentRoute)
 app.use('/',busBokkingRoute)
 app.listen(3000,()=>{
     console.log('server is running');
