@@ -11,7 +11,7 @@ app.get('/',(req,res)=>{
 })
 app.use('/',studentRoute)
 app.use('/',busBokkingRoute)
-studentDB.sync({force:true}).then(()=>{
+studentDB.sync({alter:true}).then(()=>{
 app.listen(3000,()=>{
     console.log('server is running');
 })
