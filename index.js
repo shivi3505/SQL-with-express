@@ -1,25 +1,41 @@
 const express= require('express');
+const cors= require('cors');
 const studentDB= require('./utils/studentDatabase')
 const busbookingDB= require('./utils/busBookingdb')
 const studentRoute= require('./routes/studentRoute')
 const busBokkingRoute= require('./routes/busBookingRote')
+const bookingAppoinmentRoute= require('./routes/bookAppoinment')
+const appoinmentDB= require('./utils/bookingAppoinment')
 const studentsModel = require('./models/students')
+
 const app= express();
+app.use(cors());
 app.use(express.json());
+app.use(express.urlencoded({extended:true}));
 app.get('/',(req,res)=>{
     res.send(`<h1> Welecome Home</h1>`)
 })
-app.use('/',studentRoute)
-app.use('/',busBokkingRoute)
-Promise.all([
-    studentDB.sync({ force: true }),
-    busbookingDB.sync({force:true })
-]).then(()=>{
-app.listen(3000,()=>{
-    console.log('server is running');
-})
-}
+// app.use('/',studentRoute)
+// app.use('/',busBokkingRoute)
+// Promise.all([
+//     studentDB.sync({ force: true }),
+//     busbookingDB.sync({force:true })
+// ]).then(()=>{
+// app.listen(3000,()=>{
+//     console.log('server is running');
+// })
+// }
 
-).catch((err)=>{
-    console.log(err);
+// ).catch((err)=>{
+//     console.log(err);
+// })
+
+app.use('/',bookingAppoinmentRoute);
+appoinmentDB.sync({force:true}).
+then(()=>{
+    app.listen(3000,()=>{
+        console.log('server is running');
+    })
+}).catch((err)=>{
+     console.log(err);
 })
