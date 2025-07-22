@@ -3,6 +3,7 @@ const cors= require('cors');
 const studentDB= require('./utils/studentDatabase')
 const busbookingDB= require('./utils/busBookingdb')
 const studentRoute= require('./routes/studentRoute')
+const courseRoute= require('./routes/courseRoute')
 const busBokkingRoute= require('./routes/busBookingRote')
 const bookingAppoinmentRoute= require('./routes/bookAppoinment')
 const appoinmentDB= require('./utils/bookingAppoinment')
@@ -41,6 +42,7 @@ app.get('/',(req,res)=>{
 //      console.log(err);
 // })
 app.use('/',studentRoute);
+app.use('/courses',courseRoute);
 studentDB.sync({force:true}).
 then(()=>{
     app.listen(3000,()=>{
