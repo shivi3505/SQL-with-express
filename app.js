@@ -6,8 +6,9 @@ const studentRoute= require('./routes/studentRoute')
 const busBokkingRoute= require('./routes/busBookingRote')
 const bookingAppoinmentRoute= require('./routes/bookAppoinment')
 const appoinmentDB= require('./utils/bookingAppoinment')
-const studentsModel = require('./models/students')
-
+//const studentsModel = require('./models/students')
+//models
+require('./models');
 const app= express();
 app.use(cors());
 app.use(express.json());
@@ -30,8 +31,17 @@ app.get('/',(req,res)=>{
 //     console.log(err);
 // })
 
-app.use('/',bookingAppoinmentRoute);
-appoinmentDB.sync({force:true}).
+// app.use('/',bookingAppoinmentRoute);
+// appoinmentDB.sync({force:true}).
+// then(()=>{
+//     app.listen(3000,()=>{
+//         console.log('server is running');
+//     })
+// }).catch((err)=>{
+//      console.log(err);
+// })
+app.use('/',studentRoute);
+studentDB.sync({force:true}).
 then(()=>{
     app.listen(3000,()=>{
         console.log('server is running');

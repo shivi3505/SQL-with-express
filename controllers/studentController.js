@@ -1,5 +1,7 @@
 const db= require('../utils/studentDatabase');
-const Student= require('../models/students')
+const Student= require('../models/students');
+const IdentityCard= require('../models/identityCard');
+const Department= require('../models/department')
 const addStudentData = async (req,res)=>{
     try{
         const {name,email,age}=req.body;
@@ -34,6 +36,20 @@ const addStudentData = async (req,res)=>{
 // res.status(201).json({message:`student with ${name} successfully addede`,data:req.body})
 //     //res.json(req.body);
 // })
+}
+
+const addValuesTOStudentAndIdentityCard= async (req,res)=>{
+    try{
+        const student= await Student.create(req.body.student);
+    const identityCard= await IdentityCard.create({
+        ...req.body.identityCard,
+        StudentId: student.id
+    })
+    res.status(201).json({student,identityCard});
+    }catch(err){
+     res.status(500).json({message:err.message})
+    }
+    
 }
 const getStudentList = async (req,res)=>{
     try{ 
@@ -176,10 +192,40 @@ try{
 //     res.status(200).json({message:`student with id ${id} has been deleted`})
 // })
 }
+const addStudentWithDepartment= async(req,res)=>{
+    try{
+       const department= await Department.create(req.body.department);
+       const student= await Student.create({
+        ...req.body.student,
+        departmentId: department.id
+       })
+       res.status(201).json({department,student})
+
+    }catch(err){
+      res.status(500).json({message:err.message})
+    }
+}
+const getAllStudentsWithDepartment = async (req, res) => {
+  try {
+    const students = await Student.findAll({
+      include: {
+        model: Department,
+        as: 'department'
+      }
+    });
+    res.json(students);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 module.exports= {
     addStudentData,
     getStudentList,
     getStudentByID,
     updateStudent,
-    deleteSudent
+    deleteSudent,
+    addValuesTOStudentAndIdentityCard,
+    addStudentWithDepartment,
+    getAllStudentsWithDepartment
 };

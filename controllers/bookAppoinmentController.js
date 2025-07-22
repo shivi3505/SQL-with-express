@@ -45,6 +45,7 @@ const deleteUSer= async (req,res)=>{
     if(users.length===0){
       res.status(404).json({message:'no user found'});
     }
+    await users.destroy();
     res.status(200).json('user has been deleted');
   }catch(err){
      res.status(500).json(err.message);
