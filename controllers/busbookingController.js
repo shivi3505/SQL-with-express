@@ -2,12 +2,14 @@ const db= require('../utils/busBookingdb');
 const Users= require('../models/users');
 const Buses = require('../models/buses');
 const { Sequelize } = require('sequelize');
+const  Bookings  = require('../models/bookings');
 const addUser= async (req,res)=>{
     try{
-        const {name,email}= req.body;
+        const {name,email,phoneNumber}=req.body
         const users= await Users.create({
          name: name,
-          email: email
+          email: email,
+          phoneNumber:phoneNumber
 })
    res.status(201).json({
     message:`bus has been added`,
@@ -102,6 +104,15 @@ const addBuses= async (req,res)=>{
 //     })
 //})
 }
+const addBookings= async (req,res)=>{
+    try{
+    const booking= await    Bookings.create(req.body);
+    res.status(201).json(booking);
+    }catch(err){
+        res.status(500).json({message:err.message});
+    }
+
+}
 const getAvailableSeats= async (req,res)=>{
     try{
         const {seat} = (req.params);
@@ -135,9 +146,63 @@ const getAvailableSeats= async (req,res)=>{
 //     })
 // })
 }
+// const addUsersWithBooking= async (req,res)=>{
+//     try{
+//         const users=await Users.create(req.body.user);
+//         const bookings=await Bookings.create({
+//          ...req.body.booking,
+//           userId: users.id
+//           });
+//      res.status(201).json({users,bookings})
+//         }catch(err){
+//               res.status(500).json({message:err.message})
+//     }
+    
+
+// }
+const getBookingwithBus=async (req,res)=>{
+    try{
+    const id = parseInt(req.params.id);
+    const bookings=  await Bookings.findAll({
+        where:{
+            userId:id,
+            
+        },
+        include:{
+        model:Buses,
+        attributes:['busNumber']
+        }
+    })
+    res.status(200).json(bookings);
+}catch(err){
+ res.status(500).json({message:err.message})
+}
+}
+const getBookingsWithUser= async (req,res)=>{
+    try{
+    const id=req.params.id;
+    const bookings=await Bookings.findAll({
+        where:{
+            busID:id
+            
+        },
+        include:{
+        model:Users,
+        attributes:['name','email','phoneNumber']
+        }
+    })
+     res.status(200).json(bookings);
+}catch(err){
+ res.status(500).json({message:err.message})
+}
+}
 module.exports={
     addUser,
     fetchAllUsers,
     addBuses,
-    getAvailableSeats
+    getAvailableSeats,
+    addBookings,
+    getBookingwithBus,
+    getBookingsWithUser   
+    
 }

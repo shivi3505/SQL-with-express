@@ -1,6 +1,6 @@
 const {Sequelize,DataTypes, INTEGER, STRING}= require('sequelize');
-// const sequelize= require('../utils/busBookingdb');
-const sequelize= require('../utils/bookingAppoinment')
+ const sequelize= require('../utils/busBookingdb');
+//nst sequelize= require('../utils/bookingAppoinment')
 const Users= sequelize.define('users',{
     id:{
         type: DataTypes.INTEGER,

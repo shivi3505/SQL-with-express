@@ -3,13 +3,13 @@ const sequelize= require('../utils/busBookingdb');
 
 const Bookings= sequelize.define('bookings',{
     id:{
-        DataTypes:INTEGER,
+        type:DataTypes.INTEGER,
         primaryKey:true,
         autoIncrement:true,
         allowNull:false
     },
     seatNumber:{
-        DataTypes:INTEGER,
+        type:DataTypes.INTEGER,
         allowNull:false
     }
 })

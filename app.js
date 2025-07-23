@@ -18,19 +18,18 @@ app.get('/',(req,res)=>{
     res.send(`<h1> Welecome Home</h1>`)
 })
 // app.use('/',studentRoute)
-// app.use('/',busBokkingRoute)
-// Promise.all([
-//     studentDB.sync({ force: true }),
-//     busbookingDB.sync({force:true })
-// ]).then(()=>{
-// app.listen(3000,()=>{
-//     console.log('server is running');
-// })
-// }
+app.use('/',busBokkingRoute)
 
-// ).catch((err)=>{
-//     console.log(err);
-// })
+busbookingDB.sync({force:true })
+.then(()=>{
+app.listen(3000,()=>{
+    console.log('server is running');
+})
+}
+
+).catch((err)=>{
+    console.log(err);
+})
 
 // app.use('/',bookingAppoinmentRoute);
 // appoinmentDB.sync({force:true}).
@@ -41,13 +40,13 @@ app.get('/',(req,res)=>{
 // }).catch((err)=>{
 //      console.log(err);
 // })
-app.use('/',studentRoute);
-app.use('/courses',courseRoute);
-studentDB.sync({force:true}).
-then(()=>{
-    app.listen(3000,()=>{
-        console.log('server is running');
-    })
-}).catch((err)=>{
-     console.log(err);
-})
+// app.use('/',studentRoute);
+// app.use('/courses',courseRoute);
+// studentDB.sync({force:true}).
+// then(()=>{
+//     app.listen(3000,()=>{
+//         console.log('server is running');
+//     })
+// }).catch((err)=>{
+//      console.log(err);
+// })
